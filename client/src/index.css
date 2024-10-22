@@ -1,0 +1,38 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+
+}
+
+
+* {
+    font-family: outfit;
+}
+.slider {
+   -webkit-appearance: none;
+   background: transparent;
+   height: 100%;
+
+}
+
+.slider::-webkit-slider-thumb {
+   appearance: none;
+    background-image: url(./assets/slide_icon.svg);
+    width: 30px;
+    min-height: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-layer {
+    background-image: url(./assets/bg_layer.png);
+    
+}
