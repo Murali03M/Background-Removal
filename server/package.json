@@ -27,25 +27,23 @@
   ],
   "typings": "./lib/index.d.ts",
   "scripts": {
-    
     "start": "nodemon src/index.ts",
     "build": "rimraf lib && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add lib",
     "test": "echo \"Error: no test specified\" && exit 1"
-  
-    
   },
   "pre-commit": [
     "ts.check",
     "build",
     "add-build"
-],
-
+  ],
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.7.7",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^6.0.1",
     "typescript": "^5.6.3"
   }
 }
