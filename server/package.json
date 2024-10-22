@@ -8,20 +8,20 @@
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "pre-commit": [
-      "ts.check",
-      "build",
-      "add-build"
+  },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
   ],
-  
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "@types/cors": "^2.8.17",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mongoose": "^8.7.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
