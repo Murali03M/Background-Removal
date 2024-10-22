@@ -27,11 +27,21 @@
   ],
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "build": "npx tsc -b",
-    "lint": "tslint -c tslint.json src/**/*.ts",
-    "prepublish": "npm run build",
-    "start": "node ./lib/index.js"
+    
+    "start": "nodemon src/index.ts",
+    "build": "rimraf lib && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  
+    
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+],
+
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
