@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(cors());
 
 // Basic route
-app.get('/', (_: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
