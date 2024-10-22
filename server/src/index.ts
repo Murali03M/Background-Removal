@@ -1,7 +1,7 @@
 import express from 'express'
 import type { Express, Request, Response } from 'express'
 import connectDB from './config/mongodb.ts';
-
+import 'dotenv/config';
 const app: Express = express()
 const PORT = process.env.PORT || 8080
 
@@ -16,7 +16,7 @@ const startServer = async () => {
 
   } catch (error) {
     console.error('Error starting the server:', error);
-    process.exit(1); // Exit the process if there's an error
+    process.exit(1);
   }
 };
 
