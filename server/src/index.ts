@@ -2,6 +2,7 @@ import express from 'express'
 import type { Express, Request, Response } from 'express'
 import connectDB from './config/mongodb.ts';
 import 'dotenv/config';
+import userRouter from './routes/userRoutes.ts';
 const app: Express = express()
 const PORT = process.env.PORT || 8080
 
@@ -20,14 +21,13 @@ const startServer = async () => {
   }
 };
 
+app.use('/api/user', userRouter);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('Express Typescript on Vercel')
 })
 
-app.get('/ping', (_req: Request, res: Response) => {
-  res.send('pong 🏓')
-})
+
 
 startServer();
 
