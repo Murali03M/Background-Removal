@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'; 
-import userModel from '../models/userModel.ts'; 
+import userModel from '../models/userModel'; 
 import { Webhook } from 'svix'; 
 
 const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {

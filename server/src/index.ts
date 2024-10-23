@@ -1,8 +1,8 @@
 import express from 'express'
 import type { Express, Request, Response } from 'express'
-import connectDB from './config/mongodb.ts';
+import connectDB from './config/mongodb';
 import 'dotenv/config';
-import userRouter from './routes/userRoutes.ts';
+import userRouter from './routes/userRoutes';
 const app: Express = express()
 const PORT = process.env.PORT || 8080
 

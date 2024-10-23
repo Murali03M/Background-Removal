@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { clerkWebhooks } from '../controllets/userControllers.ts';
+import { clerkWebhooks } from '../controllets/userControllers';
 
 
 const userRouter =express.Router();
