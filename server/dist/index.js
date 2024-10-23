@@ -18,6 +18,7 @@ require("dotenv/config");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
+app.use(express_1.default.json());
 // Function to connect to the database and start the server
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

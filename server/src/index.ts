@@ -6,6 +6,7 @@ import userRouter from './routes/userRoutes';
 const app: Express = express()
 const PORT = process.env.PORT || 8080
 
+app.use(express.json());
 
 
 // Function to connect to the database and start the server
