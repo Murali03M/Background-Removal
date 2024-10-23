@@ -28,16 +28,10 @@ const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             throw new Error("Missing required Svix headers for webhook verification");
         }
         // Verify the webhook signature
-        whook.verify(JSON.stringify(req.body), {
-            "svix-id": svixId,
-            "svix-signature": svixSignature,
-            "svix-timestamp": svixTimestamp
-        });
-        // Verify the webhook
         yield whook.verify(JSON.stringify(req.body), {
-            "svix-id": req.headers["svix-id"],
-            "svix-signature": req.headers["svix-signature"],
-            "svix-timestamp": req.headers["svix-timestamp"]
+            "svix-id": svixId,
+            "svix-timestamp": svixTimestamp,
+            "svix-signature": svixSignature
         });
         const { data, type } = req.body;
         // Ensure type is one of the expected values

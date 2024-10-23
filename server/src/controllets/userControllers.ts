@@ -21,20 +21,15 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
         }
 
         // Verify the webhook signature
-        whook.verify(JSON.stringify(req.body), {
+       await whook.verify(JSON.stringify(req.body), {
             "svix-id": svixId,
-            "svix-signature": svixSignature,
-            "svix-timestamp": svixTimestamp
+            "svix-timestamp": svixTimestamp,
+            "svix-signature": svixSignature
+            
         });
 
 
-        
-        // Verify the webhook
-        await whook.verify(JSON.stringify(req.body), {
-            "svix-id": req.headers["svix-id"] as string,
-            "svix-signature": req.headers["svix-signature"] as string,
-            "svix-timestamp": req.headers["svix-timestamp"] as string
-        });
+      
       
 
         const { data, type } = req.body;
