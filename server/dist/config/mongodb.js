@@ -16,7 +16,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(process.env.MONGODB_URI);
-        yield mongoose_1.default.connect(`${process.env.MONGODB_URI}`);
+        yield mongoose_1.default.connect(`${process.env.MONGODB_URI}/bgremoval`);
         console.log('MongoDB connected successfully.');
     }
     catch (error) {
