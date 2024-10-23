@@ -4,7 +4,27 @@ import { Webhook } from 'svix';
 
 const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
     try {
+
+        console.log("wksjbfkshfxbvkx");
+        
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET || '');
+
+        const svixId = req.headers["svix-id"] as string;
+        const svixSignature = req.headers["svix-signature"] as string;
+        const svixTimestamp = req.headers["svix-timestamp"] as string;
+
+        if (!svixId || !svixSignature || !svixTimestamp) {
+            throw new Error("Missing required Svix headers for webhook verification");
+        }
+
+        // Verify the webhook signature
+        whook.verify(JSON.stringify(req.body), {
+            "svix-id": svixId,
+            "svix-signature": svixSignature,
+            "svix-timestamp": svixTimestamp
+        });
+
+
         
         // Verify the webhook
         await whook.verify(JSON.stringify(req.body), {
@@ -12,6 +32,7 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
             "svix-signature": req.headers["svix-signature"] as string,
             "svix-timestamp": req.headers["svix-timestamp"] as string
         });
+      
 
         const { data, type } = req.body;
         
