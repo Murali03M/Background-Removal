@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const userSchema = new mongoose_1.default.Schema({
     clerkId: { type: 'string', required: true, unique: true },
-    emil: { type: 'string', required: true, unique: true },
+    email: { type: 'string', required: true, unique: true },
     photo: { type: 'string', required: true },
     firstName: { type: 'string' },
     lastName: { type: 'string' },
