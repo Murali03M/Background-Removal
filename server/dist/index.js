@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const mongodb_1 = __importDefault(require("./config/mongodb"));
 require("dotenv/config");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const userModel_1 = __importDefault(require("./models/userModel"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
 app.use(express_1.default.json());
@@ -34,6 +35,17 @@ app.use('/api/user', userRoutes_1.default);
 app.get('/', (_req, res) => {
     res.send('Express Typescript on Vercel');
 });
+app.post('/api/test-user', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userData = req.body; // Make sure this is in the right format
+        yield userModel_1.default.create(userData);
+        res.status(201).json({ success: true });
+    }
+    catch (error) {
+        console.error("Error creating user:", error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}));
 startServer();
 // Export the Express app for Vercel
 exports.default = app;

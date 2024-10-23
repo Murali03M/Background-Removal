@@ -8,6 +8,9 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
         console.log("wksjbfkshfxbvkx");
         
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET || '');
+        
+        console.log(whook);
+        
 
         const svixId = req.headers["svix-id"] as string;
         const svixSignature = req.headers["svix-signature"] as string;
@@ -51,8 +54,8 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
                     photo: data.image_url || '' 
                 }
 
-                await userModel.create(userData); 
-                res.status(201).json({ success: true }); 
+              const data1 =  await userModel.create(userData); 
+                res.status(201).json({ success: true, data:data }); 
                 break;
             }
             case "user.updated": {

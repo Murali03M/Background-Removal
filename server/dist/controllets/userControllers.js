@@ -20,6 +20,7 @@ const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         console.log("wksjbfkshfxbvkx");
         const whook = new svix_1.Webhook(process.env.CLERK_WEBHOOK_SECRET || '');
+        console.log(whook);
         const svixId = req.headers["svix-id"];
         const svixSignature = req.headers["svix-signature"];
         const svixTimestamp = req.headers["svix-timestamp"];
@@ -52,8 +53,8 @@ const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                     lastname: data.last_name || '',
                     photo: data.image_url || ''
                 };
-                yield userModel_1.default.create(userData);
-                res.status(201).json({ success: true });
+                const data1 = yield userModel_1.default.create(userData);
+                res.status(201).json({ success: true, data: data });
                 break;
             }
             case "user.updated": {
