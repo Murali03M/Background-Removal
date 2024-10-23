@@ -18,9 +18,9 @@ const svix_1 = require("svix");
 const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
-        console.log("wksjbfkshfxbvkx");
+        console.log("Webhook received.");
         const whook = new svix_1.Webhook(process.env.CLERK_WEBHOOK_SECRET || '');
-        console.log(whook);
+        // Verify the webhook signature using raw body
         const svixId = req.headers["svix-id"];
         const svixSignature = req.headers["svix-signature"];
         const svixTimestamp = req.headers["svix-timestamp"];
@@ -28,11 +28,12 @@ const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             throw new Error("Missing required Svix headers for webhook verification");
         }
         // Verify the webhook signature
-        yield whook.verify(JSON.stringify(req.body), {
+        whook.verify(JSON.stringify(req.body), {
             "svix-id": svixId,
-            "svix-timestamp": svixTimestamp,
-            "svix-signature": svixSignature
+            "svix-signature": svixSignature,
+            "svix-timestamp": svixTimestamp
         });
+        // Extract the data and type from the body
         const { data, type } = req.body;
         // Ensure type is one of the expected values
         if (!data || !type) {
@@ -44,25 +45,27 @@ const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                     clerkId: data.id,
                     email: ((_a = data.email_addresses[0]) === null || _a === void 0 ? void 0 : _a.email_address) || '',
                     firstName: data.first_name || '',
-                    lastname: data.last_name || '',
+                    lastName: data.last_name || '',
                     photo: data.image_url || ''
                 };
-                const data1 = yield userModel_1.default.create(userData);
-                res.status(201).json({ success: true, data: data });
+                // Create the user in the database
+                const newUser = yield userModel_1.default.create(userData);
+                res.status(201).json({ success: true, data: newUser });
                 break;
             }
             case "user.updated": {
                 const userData = {
                     email: ((_b = data.email_addresses[0]) === null || _b === void 0 ? void 0 : _b.email_address) || '',
                     firstName: data.first_name || '',
-                    lastname: data.last_name || '',
+                    lastName: data.last_name || '',
                     photo: data.image_url || ''
                 };
+                // Update the user in the database
                 const updatedUser = yield userModel_1.default.findOneAndUpdate({ clerkId: data.id }, userData, { new: true });
                 if (!updatedUser) {
                     throw new Error("User not found");
                 }
-                res.status(200).json({ success: true });
+                res.status(200).json({ success: true, data: updatedUser });
                 break;
             }
             case "user.deleted": {
@@ -80,7 +83,7 @@ const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
     }
     catch (error) {
-        console.log(error.message);
+        console.error("Error processing webhook:", error.message);
         res.status(500).json({ success: false, message: error.message });
     }
 });

@@ -4,14 +4,11 @@ import { Webhook } from 'svix';
 
 const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
     try {
+        console.log("Webhook received.");
 
-        console.log("wksjbfkshfxbvkx");
-        
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET || '');
-        
-        console.log(whook);
-        
 
+        // Verify the webhook signature using raw body
         const svixId = req.headers["svix-id"] as string;
         const svixSignature = req.headers["svix-signature"] as string;
         const svixTimestamp = req.headers["svix-timestamp"] as string;
@@ -21,19 +18,15 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
         }
 
         // Verify the webhook signature
-       await whook.verify(JSON.stringify(req.body), {
+        whook.verify(JSON.stringify(req.body), {
             "svix-id": svixId,
-            "svix-timestamp": svixTimestamp,
-            "svix-signature": svixSignature
-            
+            "svix-signature": svixSignature,
+            "svix-timestamp": svixTimestamp
         });
 
-
-      
-      
-
+        // Extract the data and type from the body
         const { data, type } = req.body;
-        
+
         // Ensure type is one of the expected values
         if (!data || !type) {
             throw new Error("Invalid webhook payload");
@@ -45,22 +38,24 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
                     clerkId: data.id,
                     email: data.email_addresses[0]?.email_address || '', 
                     firstName: data.first_name || '', 
-                    lastname: data.last_name || '', 
+                    lastName: data.last_name || '', 
                     photo: data.image_url || '' 
-                }
+                };
 
-              const data1 =  await userModel.create(userData); 
-                res.status(201).json({ success: true, data:data }); 
+                // Create the user in the database
+                const newUser = await userModel.create(userData); 
+                res.status(201).json({ success: true, data: newUser }); 
                 break;
             }
             case "user.updated": {
                 const userData = {
                     email: data.email_addresses[0]?.email_address || '', 
                     firstName: data.first_name || '', 
-                    lastname: data.last_name || '', 
+                    lastName: data.last_name || '', 
                     photo: data.image_url || '' 
-                }
+                };
 
+                // Update the user in the database
                 const updatedUser = await userModel.findOneAndUpdate(
                     { clerkId: data.id }, 
                     userData,
@@ -71,7 +66,7 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
                     throw new Error("User not found");
                 }
 
-                res.status(200).json({ success: true }); 
+                res.status(200).json({ success: true, data: updatedUser }); 
                 break;
             }
             case "user.deleted": {
@@ -90,11 +85,11 @@ const clerkWebhooks = async (req: Request, res: Response): Promise<void> => {
             }
         }
     } catch (error) {
-        console.log(error.message); 
+        console.error("Error processing webhook:", error.message); 
         res.status(500).json({ success: false, message: error.message }); 
     }
-}
+};
 
 export {
     clerkWebhooks
-}
+};
