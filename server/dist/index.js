@@ -21,12 +21,7 @@ const imageRoutes_1 = __importDefault(require("./routes/imageRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: 'http://localhost:5173', // Allow requests from this origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Specify allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers if needed
-    credentials: true, // Allow cookies to be sent along with requests if necessary
-}));
+app.use((0, cors_1.default)());
 // Function to connect to the database and start the server
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

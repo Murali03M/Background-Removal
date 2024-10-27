@@ -25,13 +25,13 @@ const clerkWebhooks = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         // Verify the webhook signature using raw body
         const svixId = req.headers["svix-id"];
         const svixSignature = req.headers["svix-signature"];
-        const svixTimestamp = req.headers["svix-tiqmestamp"];
+        const svixTimestamp = req.headers["svix-timestamp"];
         if (!svixId || !svixSignature || !svixTimestamp) {
             throw new Error("Missing required Svix headers for webhook verification");
         }
         // Verify the webhook signature
         whook.verify(JSON.stringify(req.body), {
-            "svix-id": svixId,
+            "svix-id": svixId || "",
             "svix-signature": svixSignature,
             "svix-timestamp": svixTimestamp,
         });

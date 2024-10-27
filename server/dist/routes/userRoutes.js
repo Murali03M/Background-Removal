@@ -12,4 +12,5 @@ userRouter.post('/webhooks', body_parser_1.default.raw({ type: 'application/json
 userRouter.get('/credits', auth_1.customAuthMiddleware, userControllers_1.userCredits);
 userRouter.post('pay-razor', auth_1.customAuthMiddleware, userControllers_1.rezorpayment);
 exports.default = userRouter;
+// https://background-removal-six.vercel.app/api/user/webhooks
 //# sourceMappingURL=userRoutes.js.map

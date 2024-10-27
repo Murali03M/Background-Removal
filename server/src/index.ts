@@ -18,8 +18,6 @@ app.use(
 
 
 
-
-
 // Function to connect to the database and start the server
 const startServer = async () => {
   try {
