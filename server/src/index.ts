@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: 'http://localhost:5173', // Allow requests from this origin
+    origin: 'https://background-removal-znav.vercel.app/', // Allow requests from this origin
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Specify allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers if needed
     credentials: true, // Allow cookies to be sent along with requests if necessary
